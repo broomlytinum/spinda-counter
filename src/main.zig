@@ -205,7 +205,6 @@ fn spindaBytes() [spinda_size]u8 {
     return bytes;
 }
 
-// not used, but nice to have
 fn writeSpindaBitmap(writer: anytype, spinda: *const [spinda_size]u8) !void {
     var pixels = [_]Bgr32{.{}} ** (spinda_width * spinda_height);
     for (spinda, 0..) |byte, i| {
