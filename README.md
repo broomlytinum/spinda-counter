@@ -15,7 +15,7 @@ Spindas in most Pokémon games have spots in a random pattern on its head. In Po
 A naive estimate of the number of unique Spindas would be the number of possible personality values, which would be 4,294,967,296 (2^32). However, that doesn't account for differing PVs that correspond to identical sprites in practice. The purpose of this program is to obtain a more accurate estimate for the number of distinct Spindas.
 
 ## Method
-This program performs a brute forch search over all 4,294,967,296 personality values by splitting the work across 430 threads. Each thread generates up to 10,000,000 Spindas, creates a 32-bit hash from the resultant sprite and records it in a bitset. Bitset writes are atomic for thread safety. Once all threads are complete, the result is found by counting the number of set bits.
+This program performs a brute force search over all 4,294,967,296 personality values by splitting the work across 430 threads. Each thread generates up to 10,000,000 Spindas, creates a 32-bit hash from the resultant sprite and records it in a bitset. Bitset writes are atomic for thread safety. Once all threads are complete, the result is found by counting the number of set bits.
 
 The reason this provides only an *estimate* is because a 32-bit hash of sprites derived from 32-bit personality values has a decent chance of encountering hash collisions. A larger hash size to solve this would require a significantly larger bitset, which becomes quickly intractable. As a workaround, you can experiment with varying hash seeds.
 
