@@ -4,7 +4,7 @@ A small program in Zig (0.11.0) to estimate the number of *visually* distinct Sp
 Result: approx. 2,555,000,000 ± 50,000 distinct Spindas
 
 ## Build
-1. If you haven't already, install [Zig 0.11.0](https://ziglang.org/download/) and add the directory to your PATH.
+1. If you haven't already, download [Zig 0.11.0](https://ziglang.org/download/) and add the directory to your PATH.
 2. `zig build run`
 
 This project has no other dependencies.
