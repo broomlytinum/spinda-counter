@@ -22,5 +22,5 @@ The reason this provides only an *estimate* is because a 32-bit hash of sprites 
 Keep in mind this method is computationally expensive. On my laptop it takes about 20 minutes from start to end and gets the fan going quite a bit.
 
 ## References
-- (Decompilation of Pokémon Emerald in C)[https://github.com/pret/pokeemerald/blob/6385f0426d0ad48d46b63a433b38170e94dca0af/src/pokemon.c#L5686] for the pattern algorithm and spot sprites
-- (Bulbapedia)[https://bulbapedia.bulbagarden.net/wiki/Spinda_(Pok%C3%A9mon)] for example patterns
+- [Decompilation of Pokémon Emerald in C](https://github.com/pret/pokeemerald/blob/6385f0426d0ad48d46b63a433b38170e94dca0af/src/pokemon.c#L5686) for the pattern algorithm and spot sprites
+- [Bulbapedia](https://bulbapedia.bulbagarden.net/wiki/Spinda_(Pok%C3%A9mon)) for example patterns
