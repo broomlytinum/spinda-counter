@@ -163,7 +163,7 @@ const spinda_width = 64;
 const spinda_height = 64;
 const spinda_row_size = spinda_width / 2;
 const spinda_size = spinda_row_size * spinda_height;
-const spinda_bytes = spindaBytes();
+const spinda_bytes = spindaBytes("asset/spinda.bmp");
 
 // commented values match the in-game indices
 // uncommented values are at arbitrary indices
@@ -184,8 +184,8 @@ const palette = [_]u32{
     0xffc8b17f,
 };
 
-fn spindaBytes() [spinda_size]u8 {
-    const sprite = readBitmap(@embedFile("asset/spinda.bmp"), 64, 64);
+fn spindaBytes(comptime path: []const u8) [spinda_size]u8 {
+    const sprite = readBitmap(@embedFile(path), 64, 64);
     var bytes = [_]u8{0} ** spinda_size;
     for (&bytes, 0..) |*byte, i| {
         const x = (i % spinda_row_size) * 2;
