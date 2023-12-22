@@ -206,23 +206,6 @@ fn spindaBytes(comptime path: []const u8) [spinda_size]u8 {
 }
 
 fn writeSpindaBitmap(writer: anytype, spinda: *const [spinda_size]u8) !void {
-    var pixels = [_]Bgr32{.{}} ** (spinda_width * spinda_height);
-    for (spinda, 0..) |byte, i| {
-        for (0..2) |n| {
-            const value: u4 = switch (n) {
-                0 => @truncate(byte),
-                1 => @truncate((byte & 0xf0) >> 4),
-                else => unreachable,
-            };
-            const color: u32 = switch (value) {
-                0...13 => palette[value],
-                else => return error.InvalidColorValue,
-            };
-            const x = (i % spinda_row_size) * 2 + n;
-            const y = i / spinda_row_size;
-            pixels[x + y * 64] = @bitCast(color);
-        }
-    }
     _ = try writer.write("\x42\x4d\x46\x40\x00\x00\x00\x00\x00\x00\x46\x00\x00\x00\x38\x00" ++ //
         "\x00\x00\x40\x00\x00\x00\x40\x00\x00\x00\x01\x00\x20\x00\x03\x00" ++ //
         "\x00\x00\x00\x40\x00\x00\x12\x0b\x00\x00\x12\x0b\x00\x00\x00\x00" ++ //
@@ -231,8 +214,17 @@ fn writeSpindaBitmap(writer: anytype, spinda: *const [spinda_size]u8) !void {
     for (0..spinda_height) |line| {
         const y = spinda_height - line - 1;
         for (0..spinda_width) |x| {
-            const bits: u32 = @bitCast(pixels[x + y * spinda_width]);
-            _ = try writer.writeInt(u32, bits, .Little);
+            const byte = spinda[x / 2 + y * spinda_row_size];
+            const value: u4 = switch (x % 2) {
+                0 => @truncate(byte),
+                1 => @truncate(byte >> 4),
+                else => unreachable,
+            };
+            const color: u32 = switch (value) {
+                0...13 => palette[value],
+                else => return error.InvalidColorValue,
+            };
+            _ = try writer.writeInt(u32, color, .Little);
         }
     }
 }
